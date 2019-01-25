@@ -1,0 +1,26 @@
+{
+  "name": "ljh-blog",
+  "version": "1.0.0",
+  "description": "My extraordinary Nuxt.js project",
+  "author": "ljhhhhhh",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cross-env": "^5.2.0",
+    "dayjs": "^1.8.0",
+    "element-ui": "^2.4.11",
+    "nuxt": "^2.3.4",
+    "vuex": "^3.1.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "sass-loader": "^7.1.0"
+  }
+}
