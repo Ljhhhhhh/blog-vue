@@ -107,6 +107,12 @@
 <style lang="scss" scoped>
   .page{
     text-align: center;
-    margin-top: 20px;
+    margin: 20px 0 50px;
+  }
+  .el-button{
+    margin: 15px 0;
+  }
+  .cell .el-button {
+    margin: 0 10px;
   }
 </style>

@@ -66,8 +66,9 @@ export default {
     window.onresize = debounce(this.initAside, 300)
     let me = this
     window.onscroll = function() {
+
       const top = doc.scrollTop
-      me.backTop = top > 500 ? 'active' : ''
+      me.backTop = top > 400 ? 'active' : ''
     }
   },
   methods: {
@@ -248,13 +249,15 @@ $theme_color: #262a30;
 }
 .back-top {
   position: fixed;
-  bottom: -30px;
+  bottom: -50px;
   right: 30px;
   padding: 5px;
   background: #262a30;
   width: 24px;
   height: 24px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0, 0.98, 0, 0.98);
   &.active {

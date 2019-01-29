@@ -1,12 +1,22 @@
 import request from '@@/utils/request'
 
-export function getArticles(page, size = 10) {
+export function getArticles(page, size = 5) {
   return request({
     url: '/articles/',
     method: 'post',
     data: {
       page,
       size
+    }
+  });
+}
+
+export function getArticlesByTag(tag) {
+  return request({
+    url: '/articlesByTag/',
+    method: 'post',
+    data: {
+      tag,
     }
   });
 }

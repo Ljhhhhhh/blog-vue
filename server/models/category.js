@@ -8,6 +8,10 @@ const Category = new Schema({
   total: {
     type: Number,
     default: 0,
+  },
+  createdAt: {
+    type: Number,
+    default: Date.now()
   }
 })
 

@@ -41,7 +41,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/headInfo.js'
   ],
 
   /*
@@ -66,4 +67,12 @@ module.exports = {
     port: 1233, // default: 3000
     host: '0.0.0.0', // default: localhost
   },
+  router: {
+    scrollBehavior (to, from, savedPosition) {
+      console.log(to, 'to');
+      if (!to.hash) {
+        return { x: 0, y: 0 }
+      }
+    },
+  }
 }

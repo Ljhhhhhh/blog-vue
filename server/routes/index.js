@@ -4,6 +4,7 @@ const path = require('path')
 const Image = require('../models/image')
 const Article = require('../models/article')
 const Category = require('../models/category')
+const User = require('../models/user')
 const Tag = require('../models/tag')
 
 router.post('/articles', async (ctx, next) => {
@@ -14,6 +15,8 @@ router.post('/articles', async (ctx, next) => {
   const articles = await Article
     .find({
       del: false
+    }, {
+      content: 0
     })
     .skip((page - 1) * size)
     .limit(size)
@@ -50,6 +53,28 @@ router.post('/articles/:id', async (ctx, next) => {
     ctx.body = {
       code: 1,
     }
+  }
+})
+
+router.post('/articlesByTag', async (ctx, next) => {
+  const {
+    tag
+  } = ctx.request.body;
+  const res = await Article
+    .find({
+      tags: tag,
+      del: false
+    }, {
+      title: 1,
+      createdAt: 1,
+      category: 1
+    })
+    .sort({
+      'createdAt': -1
+    });
+  ctx.body = {
+    code: 0,
+    articles: res
   }
 })
 
@@ -158,27 +183,32 @@ router.post('/delArticle', async (ctx, next) => {
     id
   } = ctx.request.body;
   const result = await Article.findById(id)
-  const {tags, category} = result
-  await Category.findOneAndUpdate({name: category}, {
+  const {
+    tags,
+    category
+  } = result
+  await Category.findOneAndUpdate({
+    name: category
+  }, {
     $inc: {
       total: -1
     }
   })
 
   tags.forEach(async tag => {
-    await Tag.findOneAndUpdate({name: tag}, {
+    await Tag.findOneAndUpdate({
+      name: tag
+    }, {
       $inc: {
         total: -1
       }
     })
   })
 
-  const res = await result.update({del: true})
-  // const res = await Article.findOneAndUpdate({
-  //   _id: id
-  // }, {
-  //   del: true
-  // });
+  const res = await result.update({
+    del: true
+  })
+
   if (res) {
     ctx.body = {
       code: 0,
@@ -192,7 +222,9 @@ router.post('/delArticle', async (ctx, next) => {
 })
 
 router.get('/tags', async (ctx, next) => {
-  const tags = await Tag.find();
+  const tags = await Tag.find().sort({
+    'createdAt': -1
+  });;
   const total = await Tag.find().count();
   ctx.body = {
     code: 0,
@@ -201,13 +233,24 @@ router.get('/tags', async (ctx, next) => {
   }
 })
 
+
 router.get('/categorys', async (ctx, next) => {
-  const categorys = await Category.find();
-  const total = await Category.find().count();
+  const articlesByCategory = await Article.aggregate([
+    {
+      $match: { del: false}
+    },
+    {$group: {
+      _id: "$category",
+      list: {
+        $push: {id: "$_id", title: "$title", createdAt: "$createdAt"},
+        // $push: "$$ROOT"
+      }
+    }}
+  ])
   ctx.body = {
     code: 0,
-    categorys,
-    total,
+    articlesByCategory,
+    total: articlesByCategory.length
   }
 })
 
@@ -225,5 +268,25 @@ router.get('/getCount', async (ctx, next) => {
   }
 })
 
+router.post('/login', async (ctx, next) => {
+  const {account, password} = ctx.request.body;
+  const users = await User.find()
+  const user = await User.findOne({
+    account: account,
+    password: password
+  })
+  if (user) {
+    ctx.body = {
+      token: Date.now() + '~!@#$%' + account,
+      code: 0,
+      msg: '登录成功'
+    }
+  } else {
+    ctx.body = {
+      code: -1,
+      msg: '登录失败'
+    }
+  }
+})
 
 module.exports = router

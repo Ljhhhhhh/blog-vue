@@ -52,6 +52,60 @@ a{
   -webkit-animation-name: slideInDown;
   animation-name: slideInDown;
 }
+
+@keyframes slideDown {
+  0% {
+    transform: translate3d(0, -10%, 0);
+    visibility: visible;
+    filter: opacity(0);
+  }
+
+  50% {
+    transform: translate3d(0, -10%, 0);
+    filter: opacity(0);
+  }
+  99% {
+    transform: translate3d(0, 0, 0);
+    filter: opacity(100);
+  }
+}
+
+.slideDown {
+  -webkit-animation-name: slideDown;
+  animation-name: slideDown;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-50px, 0, 0);
+    visibility: visible;
+    filter: opacity(0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    filter: opacity(100);
+  }
+}
+
+.slideInLeft {
+  animation-name: slideInLeft;
+}
+
+@keyframes optionIn {
+  from {
+    filter: opacity(0);
+  }
+
+  to {
+    filter: opacity(100);
+  }
+}
+
+.optionIn {
+  animation-name: optionIn;
+}
+
 @keyframes bounce {
   0% {
     -webkit-animation-timing-function: cubic-bezier(.215,.61,.355,1);

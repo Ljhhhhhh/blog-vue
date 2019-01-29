@@ -10,23 +10,23 @@
       “难”绝对是生命中幸福的开始，“容易”绝对不是该庆幸的事。
     </p>
     <div class="head-info_menus hidden-xs-only animated slideInDown">
-      <nuxt-link to="/index/1">
+      <nuxt-link to="/" exact>
         <i class="iconfont icon-home"/>
         <span>首页</span>
       </nuxt-link>
-      <nuxt-link to="/demo">
+      <nuxt-link to="/about">
         <i class="iconfont icon-me"/>
         <span>关于</span>
       </nuxt-link>
-      <nuxt-link to="/b">
+      <nuxt-link to="/tags">
         <i class="iconfont icon-tag"/>
         <span>标签</span>
       </nuxt-link>
-      <nuxt-link to="/c">
+      <nuxt-link to="/categorys">
         <i class="iconfont icon-category"/>
         <span>分类</span>
       </nuxt-link>
-      <nuxt-link to="/d">
+      <nuxt-link :to="{name: 'archive-page', params: {page: '1'}}">
         <i class="iconfont icon-guidang"/>
         <span>归档</span>
       </nuxt-link>
@@ -41,23 +41,23 @@
       class="small_menus"
       @click="closeMenu">
       <nuxt-link
-        to="/index/1">
+        to="/" exact>
         <i class="iconfont icon-home"/>
         <span>首页</span>
       </nuxt-link>
-      <nuxt-link to="/demo">
+      <nuxt-link to="/about">
         <i class="iconfont icon-me"/>
         <span>关于</span>
       </nuxt-link>
-      <nuxt-link to="/b">
+      <nuxt-link to="/tags">
         <i class="iconfont icon-tag"/>
         <span>标签</span>
       </nuxt-link>
-      <nuxt-link to="/c">
+      <nuxt-link to="/categorys">
         <i class="iconfont icon-category"/>
         <span>分类</span>
       </nuxt-link>
-      <nuxt-link to="/d">
+      <nuxt-link to="/archive/1">
         <i class="iconfont icon-guidang"/>
         <span>归档</span>
       </nuxt-link>
@@ -69,6 +69,13 @@ export default {
   data() {
     return {
       mobileMenusShow: false
+    }
+  },
+  mounted () {
+    window.onscroll = () => {
+      if (this.mobileMenusShow) {
+        this.mobileMenusShow = false
+      }
     }
   },
   methods: {
@@ -164,13 +171,16 @@ export default {
 .head-info_menus {
   margin-top: 30px;
   animation-delay: 1.5s;
+
   a {
     display: inline-flex;
     flex-direction: column;
     font-size: 13px;
     width: 40px;
     margin: 0 8px;
-    border-bottom: none;
+    &:not(.nuxt-link-active){
+      border-bottom: 1px dashed transparent;
+    }
     &.nuxt-link-exact-active,
     &:hover {
       border-bottom: 1px solid #222;
