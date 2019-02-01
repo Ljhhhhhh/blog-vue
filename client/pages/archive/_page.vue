@@ -26,9 +26,11 @@
 </template>
 <script>
   import {
-    getArticles,
+    getArticles
+  } from '@@/api/article'
+  import {
     getCount
-  } from '@@/api/index'
+  } from '@@/api/common'
   import dayjs from 'dayjs'
   import '@/assets/styles/page.scss'
 

@@ -1,5 +1,5 @@
 p,div,span,em,a,strong,input,select,label {
-  font-family: 'PingFangSC-Regular', 'SourceHanSansCN-Regular', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -9,7 +9,7 @@ html, body{
   min-width: 100%;
 }
 
-a{
+a:not(.slide-menu_box){
   color: #6A6A6A;
   outline: none;
   text-decoration: none;

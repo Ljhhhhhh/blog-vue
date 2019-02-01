@@ -72,11 +72,13 @@ export default {
     }
   },
   mounted () {
-    window.onscroll = () => {
-      if (this.mobileMenusShow) {
-        this.mobileMenusShow = false
+    this.$nextTick(() => {
+      document.documentElement.onclick = (e) => {
+        if (e.target.className !== 'hidden-sm-and-up menus_toggle') {
+          this.mobileMenusShow = false
+        }
       }
-    }
+    })
   },
   methods: {
     toggleMenu() {

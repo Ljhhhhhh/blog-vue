@@ -26,7 +26,7 @@
 <script>
   import {
     getCategorys
-  } from '@@/api/index';
+  } from '@@/api/category';
 
   export default {
     head() {

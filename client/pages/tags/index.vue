@@ -7,30 +7,30 @@
         <div class="tag-count">目前共计有{{total}}个标签</div>
         <el-row>
           <el-col class="tag-list">
-            <nuxt-link class="tag" v-for="tag in tags" :key="tag._id" :style="{fontSize: tag.fontSize,color: tag.color}" :to="'/tags/' + tag.name">
+            <nuxt-link class="tag" v-for="tag in tags" :key="tag._id" :style="{fontSize: tag.fontSize,color: tag.color}"
+              :to="'/tags/' + tag.name">
               {{tag.name}}
             </nuxt-link>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-    <!-- {{tags}}
-    --
-    {{total}} -->
   </div>
 </template>
 <script>
   import {
     getTags
-  } from '@@/api/index'
+  } from '@@/api/tag'
 
   export default {
     head() {
       return {
         title: '标签 | Ljhhhhhh\'s Blog',
-        meta: [
-          { hid: 'description', name: 'description', content: '标签列表,卢洁辉的个人博客' }
-        ]
+        meta: [{
+          hid: 'description',
+          name: 'description',
+          content: '标签列表,卢洁辉的个人博客'
+        }]
       }
     },
     async asyncData() {
@@ -69,21 +69,25 @@
   .tags-wrap {
     animation-delay: 2s;
     overflow: hidden;
-    .tag-title{
+
+    .tag-title {
       text-align: center;
       font-size: 24px;
       color: #999;
     }
-    .tag-count{
+
+    .tag-count {
       color: #555;
       font-size: 14px;
       text-align: center;
       margin-top: 50px;
       margin-bottom: 20px;
     }
-    .tag-list{
+
+    .tag-list {
       text-align: center;
-      .tag{
+
+      .tag {
         display: inline-block;
         margin: 5px 10px;
         text-decoration: none;
@@ -91,8 +95,9 @@
         word-wrap: break-word;
         line-height: 1.5em;
         cursor: pointer;
-        &:hover{
-          color: #000!important;
+
+        &:hover {
+          color: #000 !important;
           border-bottom: 1px solid transparent;
           // filter: blur(0.5px);
           text-shadow: -2px 2px 2px #333;

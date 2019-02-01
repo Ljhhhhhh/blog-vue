@@ -5,15 +5,16 @@
     <p class="name">Ljhhhhhh</p>
     <p class="explain">一个简简单单的技术类博客</p>
     <div class="slide-menu_box">
-      <a class="slide-menu">
+      <!-- TODO:: 链接 -->
+      <nuxt-link class="slide-menu" to="/">
         <span>{{$store.state.countData.articleTotal}}</span>
         <span>日志</span>
-      </a>
-      <a class="slide-menu">
+      </nuxt-link>
+      <nuxt-link class="slide-menu" to="/categorys">
         <span>{{$store.state.countData.categoryTotal}}</span>
         <span>分类</span>
-      </a>
-      <a class="slide-menu">
+      </nuxt-link>
+      <a class="slide-menu" to="/tags">
         <span>{{$store.state.countData.tagTotal}}</span>
         <span>标签</span>
       </a>
@@ -40,7 +41,7 @@
   } from 'element-ui'
   import {
     getCount
-  } from '@@/api/index'
+  } from '@@/api/common'
   export default {
     data() {
       return {}

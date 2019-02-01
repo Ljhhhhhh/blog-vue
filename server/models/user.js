@@ -9,6 +9,10 @@ const User = new Schema({
     type: String,
     require: true
   },
+  token: {
+    type: String,
+    default: '',
+  }
 })
 
 module.exports = mongoose.model('User', User)

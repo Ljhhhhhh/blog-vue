@@ -44,6 +44,8 @@
           if (res.code === 0) {
             this.setToken(res.token);
             cookie.set('token', res.token,{ expires: 3 });
+            this.setAccount(this.account);
+            cookie.set('account', this.account,{ expires: 3 });
             this.$message({
               message: res.msg,
               type: 'success',
@@ -63,7 +65,8 @@
         })
       },
       ...mapMutations({
-        'setToken': 'setToken'
+        'setToken': 'setToken',
+        'setAccount': 'setAccount',
       })
     }
   }

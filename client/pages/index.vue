@@ -38,9 +38,14 @@
   </div>
 </template>
 <script>
-import {getArticles, getCount} from '@@/api/index'
+import {
+    getArticles
+  } from '@@/api/article'
+  import {
+    getCount
+  } from '@@/api/common'
 import dayjs from 'dayjs'
-import '@/assets/styles/page.scss'
+import '@@/static/styles/page.scss'
 
 export default {
   head() {
@@ -52,29 +57,10 @@ export default {
       }
     },
   async asyncData({app, params, store}) {
-    // let pageTotal;
     const PAGESIZE = 5
-    // if (!store.state.countData.articleTotal) {
-    //   const result = await getCount()
-    //   pageTotal = result.articleTotal / PAGESIZE
-    // } else {
-    //   pageTotal = store.state.countData.articleTotal / PAGESIZE
-    // }
-    // let page;
-    // if (!/^\d+$/.test(params.page)) {
-    //   app.router.push({
-    //     name: 'index-page',
-    //     params: {
-    //       page: 1
-    //     }
-    //   })
-    // } else {
-    //   page = Number(params.page)
-    //   page = page > pageTotal ? 1 : page
-    // }
     const {articles, total} = await getArticles(1)
     articles.forEach(article => {
-      article.time = dayjs(article.createdAt).format('YYYY-MM-DD HH:MM')
+      article.time = dayjs(article.createdAt).format('YYYY-MM-DD')
     });
     const curPage = 1
     return {articles, total, curPage, PAGESIZE}
@@ -99,3 +85,7 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  // @import url('@/static/styles/page.scss');
+</style>
+

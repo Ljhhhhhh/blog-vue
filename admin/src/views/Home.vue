@@ -93,7 +93,7 @@
             page: this.page
           }
         }).then(res => {
-          res.articles.forEach(article => {
+          res.articles && res.articles.forEach(article => {
             article.time = dayjs(article.createdAt).format('YYYY-MM-DD HH:mm')
           });
           this.articles = res.articles;

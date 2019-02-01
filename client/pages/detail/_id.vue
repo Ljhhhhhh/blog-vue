@@ -23,7 +23,7 @@
 <script>
   import {
     getArticleDetail
-  } from '@@/api'
+  } from '@@/api/article'
   import dayjs from 'dayjs'
 
   export default {

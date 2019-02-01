@@ -3,16 +3,15 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-// const bodyparser = require('koa-bodyparser')
 const KoaBody = require('koa-body')
 const mongoose = require('mongoose')
 const dbConfig = require('./models/config')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
+const auth = require('./middlewares/auth')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
-const upload = require('./routes/upload')
+const registerRouter = require('./routes/index')()
+
 const static = require('koa-static')
 const path = require('path')
 // error handler
@@ -20,13 +19,9 @@ onerror(app)
 
 // middlewares
 app.use(cors())
-// app.use(bodyparser({
-//   enableTypes:['json', 'form', 'text']
-// }))
 
 app.use(json())
 app.use(logger())
-// app.use(require('koa-static')(__dirname + '/public'))
 
 
 mongoose.Promise = global.Promise
@@ -54,10 +49,29 @@ app.use(KoaBody({
   strice: false
 }))
 
-// routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(upload.routes(), upload.allowedMethods())
+app.use(auth())
+// app.use(async (ctx, next) => {
+//   if (ctx.path !== '/login') {
+//     const {
+//       token,
+//       account
+//     } = ctx.request.headers;
+//     const authRes = await auth(token, account)
+//     if (authRes) {
+//       await next()
+//     } else {
+//       ctx.body = {
+//         code: 402,
+//         msg: '请登录！'
+//       }
+//       return
+//     }
+//   } else {
+//     await next()
+//   }
+// })
+
+app.use(registerRouter)
 
 app.use(static(
   path.join(__dirname, '/public')

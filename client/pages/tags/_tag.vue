@@ -20,7 +20,7 @@
 <script>
   import {
     getArticlesByTag
-  } from '@@/api/index'
+  } from '@@/api/tag'
   import dayjs from 'dayjs'
 
   export default {

@@ -5,12 +5,10 @@ const a = [
   {name: 'ljdsh', age: 24, sex: 2},
 ]
 
-const sexs = [{value: 1, name: '男'}, {value: 2, name: '女'}];
+class ljh {
+  getlist() {
+    return 1
+  }
+}
 
-sexs.forEach(sex => {
-  sex.list = a.filter(v => {
-    return v.sex === sex.value
-  })
-})
-
-console.log('sexs:', sexs[0].list)
+module.exports = ljh
