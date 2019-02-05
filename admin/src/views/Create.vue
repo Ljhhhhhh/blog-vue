@@ -5,15 +5,16 @@
         <el-input v-model="title" placeholder="请输入标题"></el-input>
       </el-form-item>
       <el-form-item label="简介">
-        <el-input
-          type="textarea"
-          :rows="2"
-          placeholder="请输入简介"
-          v-model="intro">
+        <el-input type="textarea" :rows="2" placeholder="请输入简介" v-model="intro">
         </el-input>
       </el-form-item>
       <p>文章详情</p>
-      <tinymce :height="400" v-model="content" />
+      <!-- <tinymce :height="400" v-model="content" /> -->
+      <el-row>
+        <el-col>
+          <mavon-editor ref="mavon" v-model="content" :navigation="true" :toolbars="toolbars" @imgAdd="$imgAdd"></mavon-editor>
+        </el-col>
+      </el-row>
     </el-form>
     <div class="category">
       <el-form>
@@ -35,7 +36,7 @@
         </el-col>
       </el-form>
       <el-button type="primary" @click="submit" class="btn">{{this.id ? '更新文章' : '发布文章'}}</el-button>
-    <el-button type="info" @click="$router.back()" class="btn">取消</el-button>
+      <el-button type="info" @click="$router.back()" class="btn">取消</el-button>
     </div>
     <div class="submit">
     </div>
@@ -43,13 +44,16 @@
 </template>
 
 <script>
-  import Tinymce from '@/components/Tinymce'
   import request from '@/utils/request';
+  import {
+    mavonEditor
+  } from 'mavon-editor';
+  import 'mavon-editor/dist/css/index.css';
 
   export default {
     name: 'Create',
     components: {
-      Tinymce
+      mavonEditor
     },
     data() {
       return {
@@ -60,7 +64,36 @@
         tags: [],
         articleTags: [],
         categorys: [],
-        articleCate: ''
+        articleCate: '',
+        markdownContent: '',
+        toolbars: {
+          header: true, // 标题
+          underline: true, // 下划线
+          strikethrough: true, // 中划线
+          mark: true, // 标记
+          superscript: true, // 上角标
+          subscript: true, // 下角标
+          quote: true, // 引用
+          ol: true, // 有序列表
+          ul: true, // 无序列表
+          link: true, // 链接
+          imagelink: true, // 图片链接
+          code: true, // code
+          table: true, // 表格
+          fullscreen: true, // 全屏编辑
+          readmodel: true, // 沉浸式阅读
+          htmlcode: true, // 展示html源码
+          help: true, // 帮助
+          /* 1.3.5 */
+          undo: true, // 上一步
+          redo: true, // 下一步
+          trash: true, // 清空
+          save: true, // 保存（触发events中的save事件）
+          /* 1.4.2 */
+          navigation: true, // 导航目录
+          subfield: true, // 单双栏模式
+          preview: true, // 预览
+        }
       }
     },
     created() {
@@ -72,6 +105,20 @@
       this.getCategory();
     },
     methods: {
+      $imgAdd(pos, $file) {
+        const formData = new FormData()
+        formData.append('file', $file)
+        request({
+          url: '/upload',
+          method: 'post',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        }).then(res => {
+          this.$refs.mavon.$img2Url(pos, res.url)
+        })
+      },
       submit() {
         if (!this.title) {
           this.$message({
@@ -111,6 +158,7 @@
         const data = {
           title: this.title,
           intro: this.intro,
+          // content: this.content,
           content: this.content,
           tags: this.articleTags,
           category: this.articleCate
@@ -168,11 +216,14 @@
           this.categorys = res.categorys
         })
       }
-    },
+    }
   }
 </script>
 
 <style scoped lang="scss">
+  .v-note-wrapper{
+    min-height: 500px;
+  }
   .category {
     margin: 30px 0;
   }

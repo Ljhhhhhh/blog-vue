@@ -1,7 +1,7 @@
 module.exports = {
   devServer: {
     open: process.platform === 'darwin',
-    host: '127.0.0.1',
+    host: 'blog_api.cixi518.com',
     port: 1235,
     https: false,
     hotOnly: false,

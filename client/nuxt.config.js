@@ -88,7 +88,6 @@ module.exports = {
   },
   router: {
     scrollBehavior(to, from, savedPosition) {
-      console.log(to, 'to');
       if (!to.hash) {
         return {
           x: 0,

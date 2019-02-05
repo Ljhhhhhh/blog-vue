@@ -1,12 +1,10 @@
 import axios from 'axios';
-// import md5 from 'md5-node';
-// import store from '../store';
 import cookie from 'js-cookie';
-// import { Toast } from 'vant';
 import { Message } from 'element-ui';
+const baseConfig = require('../config')
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://127.0.0.1:1234', // api 的 base_url blog_api.cixi518.com
+  baseURL: baseConfig.baseUrl,
   timeout: 5000, // request timeout
 });
 // request interceptor

@@ -1,7 +1,8 @@
 const Article = require('../models/article')
+const Category = require('../models/category')
 
 class CategoryController {
-  async getList() {
+  async getArticleByCategory() {
     const list = await Article.aggregate([
       {
         $match: { del: false}
@@ -14,8 +15,14 @@ class CategoryController {
         }
       }}
     ])
-    
     return list;
+  }
+
+  async getList() {
+    const categorys = await Category.find()
+    return {
+      categorys
+    }
   }
 }
 

@@ -25,29 +25,30 @@
 </template>
 <script>
   import {
-    getCategorys
+    getArticleByCategorys
   } from '@@/api/category';
 
   export default {
     head() {
       return {
         title: '分类 | Ljhhhhhh\'s Blog',
-        meta: [
-          { hid: 'description', name: 'description', content: '分类查看,卢洁辉的个人博客' }
-        ]
+        meta: [{
+          hid: 'description',
+          name: 'description',
+          content: '分类查看,卢洁辉的个人博客'
+        }]
       }
     },
     async asyncData() {
       const {
         articlesByCategory,
         total
-      } = await getCategorys();
+      } = await getArticleByCategorys();
       return {
         articlesByCategory,
         total
       }
     },
-
   }
 
 </script>
@@ -92,9 +93,12 @@
             font-size: 20px;
             line-height: 40px;
             color: #666;
-            i, span{
+
+            i,
+            span {
               vertical-align: middle;
             }
+
             i {
               margin-right: 5px;
               color: #bbb;
@@ -108,9 +112,11 @@
 
             .li_cld {
               padding: 5px 0;
+
               a {
                 border-bottom: 1px solid transparent;
-                &:hover{
+
+                &:hover {
                   border-bottom: 1px solid #ccc;
                 }
               }

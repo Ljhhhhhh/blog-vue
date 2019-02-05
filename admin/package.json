@@ -13,6 +13,7 @@
     "dayjs": "^1.8.0",
     "element-ui": "^2.4.5",
     "js-cookie": "^2.2.0",
+    "mavon-editor": "^2.6.17",
     "vue": "^2.5.21",
     "vue-cli-plugin-axios": "^0.0.4",
     "vue-router": "^3.0.1",

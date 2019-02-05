@@ -2,7 +2,7 @@
   <div class='container'>
     <head-info />
     <el-row type="flex" justify="center">
-    <el-col class="article-wrap animated slideDown" :xs="22" :sm="22" :md="18" :lg="16">
+    <el-col class="article-wrap " :xs="22" :sm="22" :md="18" :lg="16">
       <div class="article-head">
         <p class="title">{{ detail.title }}</p>
         <p class="info">
@@ -14,7 +14,11 @@
         </p>
       </div>
       <div class="article-intro">{{detail.intro}}</div>
-      <div class="article-content" v-html="detail.content"></div>
+      <el-row>
+        <el-col>
+          <mavon-editor ref="mavon" v-model="detail.content" :navigation="false" defaultOpen="preview" :editable="false" :toolbarsFlag="false" :subfield="false" :boxShadow="false"></mavon-editor>
+        </el-col>
+      </el-row>
     </el-col>
     </el-row>
     <!-- {{detail}} -->
@@ -25,6 +29,10 @@
     getArticleDetail
   } from '@@/api/article'
   import dayjs from 'dayjs'
+  import {
+    mavonEditor
+  } from 'mavon-editor';
+  import 'mavon-editor/dist/css/index.css';
 
   export default {
     head() {
@@ -47,12 +55,31 @@
       }
     },
     data() {
-      return {}
+      return {
+        toolbars: {
+          header: true, // 标题
+          ol: true, // 有序列表
+          ul: true, // 无序列表
+          link: true, // 链接
+          readmodel: true, // 沉浸式阅读
+          navigation: true, // 导航目录
+        }
+      }
     },
+    components: {
+      mavonEditor
+    }
   }
 
 </script>
 <style lang="scss" scoped>
+  /deep/ .v-note-wrapper .v-note-panel{
+      border: none;
+    }
+  /deep/ .v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html{
+    background: transparent;
+    padding: 8px 15px;
+  }
   .article-wrap {
     animation-delay: 2s;
     .article-head {
@@ -88,7 +115,7 @@
       }
     }
     .article-intro{
-      margin-top: 30px;
+      margin: 30px auto 60px;
       text-align: center;
       color: #555;
     }

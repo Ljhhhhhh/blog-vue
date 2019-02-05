@@ -10,8 +10,9 @@
       <el-upload
         :on-success="handleSuccess"
         class="editor-slide-upload"
-        action="http://127.0.0.1:1234/upload"
-        :show-file-list="false">
+        action="http://http://blog_api.cixi518.com:1234/upload"
+        :show-file-list="false"
+        :headers="headersData">
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
     </el-dialog>
@@ -21,6 +22,8 @@
 <script>
 import plugins from './plugins'
 import toolbar from './toolbar'
+import {mapState} from 'vuex'
+import cookie from 'js-cookie'
 
 export default {
   name: 'Tinymce',
@@ -54,6 +57,7 @@ export default {
   },
   data() {
     return {
+      headersData: {},
       dialogVisible: false,
       hasChange: false,
       hasInit: false,
@@ -68,7 +72,11 @@ export default {
   computed: {
     language() {
       return this.languageTypeList[this.$store.getters.language]
-    }
+    },
+    ...mapState([
+      'token',
+      'account'
+    ])
   },
   watch: {
     value(val) {
@@ -83,7 +91,11 @@ export default {
     }
   },
   mounted() {
-    this.initTinymce()
+    this.initTinymce();
+    this.headersData = {
+      token: this.token || cookie.get('token'),
+      account: this.account || cookie.get('account')
+    }
   },
   activated() {
     this.initTinymce()
@@ -136,39 +148,6 @@ export default {
             _this.fullscreen = e.state
           })
         }
-        // 整合七牛上传
-        // images_dataimg_filter(img) {
-        //   setTimeout(() => {
-        //     const $image = $(img);
-        //     $image.removeAttr('width');
-        //     $image.removeAttr('height');
-        //     if ($image[0].height && $image[0].width) {
-        //       $image.attr('data-wscntype', 'image');
-        //       $image.attr('data-wscnh', $image[0].height);
-        //       $image.attr('data-wscnw', $image[0].width);
-        //       $image.addClass('wscnph');
-        //     }
-        //   }, 0);
-        //   return img
-        // },
-        // images_upload_handler(blobInfo, success, failure, progress) {
-        //   progress(0);
-        //   const token = _this.$store.getters.token;
-        //   getToken(token).then(response => {
-        //     const url = response.data.qiniu_url;
-        //     const formData = new FormData();
-        //     formData.append('token', response.data.qiniu_token);
-        //     formData.append('key', response.data.qiniu_key);
-        //     formData.append('file', blobInfo.blob(), url);
-        //     upload(formData).then(() => {
-        //       success(url);
-        //       progress(100);
-        //     })
-        //   }).catch(err => {
-        //     failure('出现未知问题，刷新页面，或者联系程序员')
-        //     console.log(err);
-        //   });
-        // },
       })
     },
     destroyTinymce() {

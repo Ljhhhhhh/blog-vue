@@ -1,5 +1,5 @@
 module.exports = {
-  dbs: 'mongodb://127.0.0.1:27017/blog',
+  dbs: 'mongodb://blog_api.cixi518.com:27017/blog',
   redis: {
     get host() {
       return 'localhost'

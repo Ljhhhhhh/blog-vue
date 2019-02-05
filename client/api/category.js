@@ -6,3 +6,10 @@ export function getCategorys() {
     method: 'get',
   });
 }
+
+export function getArticleByCategorys() {
+  return request({
+    url: '/articlesByCategory/',
+    method: 'get',
+  });
+}

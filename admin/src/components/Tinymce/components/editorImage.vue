@@ -11,7 +11,7 @@
         :on-success="handleSuccess"
         :before-upload="beforeUpload"
         class="editor-slide-upload"
-        action="http://127.0.0.1:1234/upload"
+        action="http://blog_api.cixi518.com:1234/upload"
         list-type="picture-card">
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
@@ -55,7 +55,6 @@ export default {
       this.dialogVisible = false
     },
     handleSuccess(response, file) {
-      console.log(response, file, '123');
       const uid = file.uid
       const objKeyArr = Object.keys(this.listObj)
       for (let i = 0, len = objKeyArr.length; i < len; i++) {

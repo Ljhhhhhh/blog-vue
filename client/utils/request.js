@@ -1,7 +1,8 @@
 import axios from 'axios';
+const config = require('../config.js')
 
 const service = axios.create({
-  baseURL: 'http://blog_api.cixi518.com:1234', // api 的 base_url ’http://127.0.0.1:1234‘
+  baseURL: config.baseUrl, // api 的 base_url ’http://http://blog_api.cixi518.com:1234‘
   timeout: 5000,
 });
 // request interceptor
